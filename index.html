@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(to right, #4facfe, #00f2fe);
             color: #fff;
             display: flex;
@@ -19,18 +19,20 @@
 
         .countdown-container {
             background: rgba(0, 0, 0, 0.7);
-            padding: 20px 40px;
+            padding: 20px 30px;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            width: 400px;
         }
 
         h1 {
             margin-bottom: 20px;
-            font-size: 1.8em;
+            font-size: 1.6em;
         }
 
         #countdown {
-            font-size: 2em;
+            font-size: 1.5em;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -43,11 +45,11 @@
 
         @media (max-width: 600px) {
             h1 {
-                font-size: 1.4em;
+                font-size: 1.3em;
             }
 
             #countdown {
-                font-size: 1.5em;
+                font-size: 1.2em;
             }
         }
     </style>
@@ -64,9 +66,14 @@
 </div>
 <script>
     const countdown = () => {
-        const targetDate = new Date("May 24, 2025 00:00:00").getTime();
+        // Türkiye saati için hedef tarih UTC olarak ayarlandı
+        const targetDate = new Date(Date.UTC(2025, 4, 24, 0, 0, 0)).getTime();
         const now = new Date().getTime();
-        const timeLeft = targetDate - now;
+
+        // Türkiye saatine göre mevcut zaman
+        const nowInTurkeyTime = now + (new Date().getTimezoneOffset() * 60000) + (3 * 3600000); // UTC+3 için ayarlama
+
+        const timeLeft = targetDate - nowInTurkeyTime;
 
         if (timeLeft >= 0) {
             const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
