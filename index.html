@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geri Sayım</title>
     <style>
+        /* Genel stil */
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
             color: #fff;
             display: flex;
             justify-content: center;
@@ -17,11 +18,12 @@
             text-align: center;
         }
 
+        /* Geri Sayım Konteyneri */
         .countdown-container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             max-width: 90%;
             width: 400px;
         }
@@ -29,27 +31,46 @@
         h1 {
             margin-bottom: 20px;
             font-size: 1.6em;
+            font-weight: bold;
+            color: #ffd700; /* Altın rengi */
         }
 
         #countdown {
-            font-size: 1.5em;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
 
-        #countdown span {
+        .time-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 1.5em;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 0.8em;
+            margin-top: 5px;
             font-weight: bold;
+            text-transform: uppercase;
+            color: #ffd700; /* Altın rengi */
         }
 
         @media (max-width: 600px) {
             h1 {
-                font-size: 1.3em;
+                font-size: 1.4em;
             }
 
             #countdown {
-                font-size: 1.2em;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .time-box {
+                font-size: 1.3em;
+                padding: 10px;
             }
         }
     </style>
@@ -58,10 +79,22 @@
 <div class="countdown-container">
     <h1>24 Mayıs 2025'e Geri Sayım</h1>
     <div id="countdown">
-        <span id="days"></span> Gün
-        <span id="hours"></span> Saat
-        <span id="minutes"></span> Dakika
-        <span id="seconds"></span> Saniye
+        <div class="time-box">
+            <div id="days">0</div>
+            <span>Gün</span>
+        </div>
+        <div class="time-box">
+            <div id="hours">0</div>
+            <span>Saat</span>
+        </div>
+        <div class="time-box">
+            <div id="minutes">0</div>
+            <span>Dakika</span>
+        </div>
+        <div class="time-box">
+            <div id="seconds">0</div>
+            <span>Saniye</span>
+        </div>
     </div>
 </div>
 <script>
@@ -86,7 +119,7 @@
             document.getElementById("minutes").innerText = minutes;
             document.getElementById("seconds").innerText = seconds;
         } else {
-            document.getElementById("countdown").innerText = "Süre doldu!";
+            document.getElementById("countdown").innerHTML = "<div class='time-box'>Süre doldu!</div>";
         }
     };
 
