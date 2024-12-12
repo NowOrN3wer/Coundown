@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geçen Süre</title>
+    <style>
+        /* Genel stil */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Turuncu geçiş */
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Geri Sayım Konteyneri */
+        .elapsed-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #ffcc00; /* Sarı */
+        }
+
+        #elapsed {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 1.5em;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 0.8em;
+            margin-top: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ffcc00; /* Sarı */
+        }
+
+        #extra-info {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #ffcc00;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.4em;
+            }
+
+            #elapsed {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .time-box {
+                font-size: 1.3em;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="elapsed-container">
+    <h1>3 Haziran 2024'ten Bu Yana</h1>
+    <div id="elapsed">
+        <div class="time-box">
+            <div id="days">0</div>
+            <span>Gün</span>
+        </div>
+        <div class="time-box">
+            <div id="hours">0</div>
+            <span>Saat</span>
+        </div>
+        <div class="time-box">
+            <div id="minutes">0</div>
+            <span>Dakika</span>
+        </div>
+        <div class="time-box">
+            <div id="seconds">0</div>
+            <span>Saniye</span>
+        </div>
+    </div>
+    <div id="extra-info"></div>
+</div>
+<script>
+    const calculateElapsedTime = () => {
+        // Başlangıç tarihi (3 Haziran 2024, 00:00:00 Türkiye Saati)
+        const startDate = new Date(Date.UTC(2024, 5, 3, 0, 0, 0)).getTime(); // Haziran (5. ay)
+        const now = new Date().getTime();
+
+        // Türkiye saatine göre mevcut zaman
+        const nowInTurkeyTime = now + (new Date().getTimezoneOffset() * 60000) + (3 * 3600000); // UTC+3 için ayarlama
+
+        const timeElapsed = nowInTurkeyTime - startDate;
+
+        if (timeElapsed >= 0) {
+            const days = Math.floor(timeElapsed / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeElapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeElapsed % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeElapsed % (1000 * 60)) / 1000);
+
+            // Ay ve gün hesaplama
+            const months = Math.floor(days / 30); // 1 ay = 30 gün varsayıldı
+            const remainingDays = days % 30;
+
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+
+            // Ek bilgi (kaç ay, kaç gün)
+            document.getElementById("extra-info").innerText = `${months} Ay ve ${remainingDays} Gün Geçti`;
+        } else {
+            document.getElementById("elapsed").innerHTML = "<div class='time-box'>Henüz Geçmiş Bir Süre Yok!</div>";
+            document.getElementById("extra-info").innerText = "";
+        }
+    };
+
+    setInterval(calculateElapsedTime, 1000);
+</script>
+</body>
+</html>
